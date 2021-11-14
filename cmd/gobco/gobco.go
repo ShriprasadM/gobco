@@ -3,9 +3,10 @@ package main
 import (
 	"flag"
 	"fmt"
+	"os"
+
 	"github.com/junhwi/gobco/html"
 	"github.com/junhwi/gobco/instrument"
-	"os"
 )
 
 func getFd(out string) (*os.File, error) {

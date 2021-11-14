@@ -92,10 +92,10 @@ func Instrument(name string, fd *os.File, coverVar string) error {
 	}
 
 	ctx := context{
-		file: f,
-		pkg:  "",
+		file:    f,
+		pkg:     "",
 		pkgPath: "github.com/junhwi/gobco",
-		self: f.Name.Name == "gobco",
+		self:    f.Name.Name == "gobco",
 	}
 	if !ctx.self {
 		ctx.importPkg()
@@ -105,7 +105,6 @@ func Instrument(name string, fd *os.File, coverVar string) error {
 	gobcoVar := "Gobco_" + coverVar
 	// Inspect the AST and print all identifiers and literals.
 	ast.Inspect(f, ctx.createVisitor(gobcoVar))
-
 
 	printer.Fprint(fd, fset, f)
 	fmt.Fprintf(fd, `
