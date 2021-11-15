@@ -30,6 +30,7 @@ func RegisterCov(c *Cov, fileName string) {
 func ReportCoverage() {
 
 	for k, v := range cov {
+		fmt.Printf("%v=%v\n", k, v)
 		covered, total := calculateCoverage(v)
 		fileName := path.Base(k)
 		fmt.Println(fileName, covered, "/", total)

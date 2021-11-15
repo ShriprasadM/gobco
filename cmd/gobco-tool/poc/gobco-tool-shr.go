@@ -1,4 +1,4 @@
-package main
+package poc
 
 import (
 	"flag"
@@ -12,7 +12,7 @@ import (
 	"github.com/junhwi/gobco/instrument"
 )
 
-func getFd(out string) (*os.File, error) {
+func getFd1(out string) (*os.File, error) {
 	if out == "" {
 		return os.Stdout, nil
 	} else {
@@ -20,21 +20,19 @@ func getFd(out string) (*os.File, error) {
 	}
 }
 
-func runGobco() {
+func runGobco1() {
 
 	cmd := flag.NewFlagSet("gobco", flag.ExitOnError)
 	// Register all flags same as go tool cover
-	outPtr := cmd.String("o", "", "file for	 output; default: stdout")
+	outPtr := cmd.String("o", "", "file for output; default: stdout")
 	version := cmd.String("V", "", "print version and exit")
 	cmd.String("mode", "", "coverage mode: set, count, atomic")
 	coverVar := cmd.String("var", "Cov", "name of coverage variable to generate (default \"Cov\")")
 	cmd.Parse(os.Args[2:])
 	files := cmd.Args()
-	fmt.Println("args")
-	// fmt.Println( files)
+	// files := []string{"./shri_test"}
 	// files := []string{"./shri_test/module1/module1.go"}
 	// files := []string{"./..."} // iterate over all packages
-	fmt.Println("inside ..... *** " + *version)
 	if *version != "" {
 		fmt.Println("cover version go1.13.1")
 	} else {
@@ -42,8 +40,7 @@ func runGobco() {
 			if info.IsDir() {
 				return nil
 			}
-			fmt.Println("file = " + path)
-			fd, err := getFd(*outPtr)
+			fd, err := getFd1(*outPtr)
 			err = instrument.Instrument(path, fd, *coverVar)
 			if err != nil {
 				fmt.Fprintf(os.Stderr, "%v\n", err)
@@ -54,11 +51,8 @@ func runGobco() {
 	}
 }
 
-func main() {
-	// poc.Check()
-	main1()
-}
-func main1() {
+//Check ...
+func Check() {
 	log.SetFlags(0)
 	log.SetPrefix("gobco: ")
 
@@ -67,12 +61,11 @@ func main1() {
 	args := os.Args[2:]
 	// tool := "/Users/shriprasad/go/bin/gobco"
 	// args := []string{"./shri_test/module1/module1.go"}
-
-	// fmt.Println(os.Args)
+	// args := []string{}
 	toolName := path.Base(tool)
 	// toolName := "cover"
 	if toolName == "cover" {
-		runGobco()
+		runGobco1()
 	} else {
 		cmd := exec.Command(tool, args...)
 		cmd.Stdin = os.Stdin
