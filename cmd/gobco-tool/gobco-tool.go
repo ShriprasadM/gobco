@@ -30,11 +30,11 @@ func runGobco() {
 	coverVar := cmd.String("var", "Cov", "name of coverage variable to generate (default \"Cov\")")
 	cmd.Parse(os.Args[2:])
 	files := cmd.Args()
-	fmt.Println("args")
-	// fmt.Println( files)
+	// fmt.Println("args")
+	// fmt.Println(files)
 	// files := []string{"./shri_test/module1/module1.go"}
 	// files := []string{"./..."} // iterate over all packages
-	fmt.Println("inside ..... *** " + *version)
+	// fmt.Println("inside ..... *** " + *version)
 	if *version != "" {
 		fmt.Println("cover version go1.13.1")
 	} else {
